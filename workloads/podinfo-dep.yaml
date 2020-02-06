@@ -73,3 +73,23 @@ spec:
           requests:
             cpu: 10m
             memory: 64Mi
+---
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: podinfo
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: podinfo
+      annotations:
+        annod21 : "vald21"
+        annod22 : "vald22"
+    spec:
+      containers:
+      - name: podinfo
+        image: nidabasregistry.azurecr.io/hello-world:latest
+        ports:
+        - containerPort: 3000
