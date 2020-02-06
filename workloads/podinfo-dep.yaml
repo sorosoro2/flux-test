@@ -3,11 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: podinfo
-  namespace: demo
+  namespace: flux-01
   labels:
     app: podinfo
   annotations:
     fluxcd.io/automated: "true"
+    anno1 : "val1"
+    anno2 : "val2"
 spec:
   strategy:
     rollingUpdate:
@@ -20,15 +22,18 @@ spec:
     metadata:
       labels:
         app: podinfo
+      annotations:
+        annop1 : "valp1"
+        annop2 : "valp2"
     spec:
       initContainers:
       - name: init
-        image: alpine:3.10.1
+        image: nidabasregistry.azurecr.io:latest
         command:
         - sleep
         - "1"
       containers:
-      - name: podinfod
+      - name: podinfo-cap
         image: nidabasregistry.azurecr.io/hello-world
         imagePullPolicy: IfNotPresent
         ports:
